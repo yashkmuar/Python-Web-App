@@ -1,21 +1,97 @@
 <!doctype html>
 <head>
-    <title>Hello Azure - Python Quickstart</title>
+    <title>XInsights - Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        [data-bs-theme="dark"] {
+            --bs-body-bg: #212529;
+            --bs-body-color: #dee2e6;
+        }
+        .card {
+            transition: background-color 0.3s ease;
+        }
+        [data-bs-theme="dark"] .card {
+            background-color: #2c3034;
+            border-color: #373b3e;
+        }
+        [data-bs-theme="dark"] .card-header {
+            background-color: #373b3e;
+            border-bottom-color: #474d53;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+        }
+        .container {
+            max-width: 960px;
+        }
+        .logo {
+            width: 128px;
+            height: 128px;
+        }
+    </style>
 </head>
 <html>
-   <body>
+   <body data-bs-theme="light">
      <main>
-        <div class="px-4 py-3 my-2 text-center">
-            <img class="d-block mx-auto mb-4" src="{{ url_for('static', filename='images/azure-icon.svg') }}" alt="Azure Logo" width="192" height="192"/>
-            <!-- <img  src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-            <h1 class="display-6 fw-bold">Hello {{name}}</h1>
-            <p class="fs-5">
-                It is nice to meet you!
-            </p>
-            <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg px-4 gap-3">Back home</a>
-          </div>
-     </main>      
+        <div class="container py-4">
+            <button class="btn btn-outline-secondary theme-toggle" onclick="toggleTheme()">
+                <svg id="theme-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                </svg>
+            </button>
+            
+            <div class="row">
+                <div class="col-md-10 mx-auto">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">Your Query</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{name}}</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Results</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text text-muted">
+                                This is a demo interface. In a real application, this would display actual analytics results based on your query.
+                            </p>
+                            <div class="alert alert-info">
+                                Sample visualization or data would appear here based on the query type and results.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary px-4">New Query</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </main>
+     
+     <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-bs-theme', newTheme);
+            
+            // Save theme preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-bs-theme', savedTheme);
+     </script>
    </body>
 </html>
