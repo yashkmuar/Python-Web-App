@@ -58,7 +58,7 @@ class KustoQueryApp:
             escaped_table = f"['{table_name}']"
             
             # Get row count
-            cls.wait_for_user_to_proceed(f"Get row count for '{database_name}.{table_name}':")
+            # cls.wait_for_user_to_proceed(f"Get row count for '{database_name}.{table_name}':")
             command = f"{escaped_table} | count"
             print(f"Executing command: {command}")
             response = kusto_client.execute_query(database_name, command)
@@ -67,7 +67,7 @@ class KustoQueryApp:
                 print(f"Row count: {count}")
 
             # Get sample rows
-            cls.wait_for_user_to_proceed(f"Get first two rows from '{database_name}.{table_name}':")
+            # cls.wait_for_user_to_proceed(f"Get first two rows from '{database_name}.{table_name}':")
             command = f"{escaped_table} | take 2"
             print(f"Executing command: {command}")
             response = kusto_client.execute_query(database_name, command)
