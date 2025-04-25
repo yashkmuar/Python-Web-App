@@ -1,30 +1,183 @@
 <!doctype html>
 <head>
-    <title>Hello Azure - Python Quickstart</title>
+    <title>XInsights</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        [data-bs-theme="dark"] {
+            --bs-body-bg: #212529;
+            --bs-body-color: #dee2e6;
+        }
+        .card {
+            transition: background-color 0.3s ease;
+        }
+        [data-bs-theme="dark"] .card {
+            background-color: #2c3034;
+            border-color: #373b3e;
+        }
+        [data-bs-theme="dark"] .card-header {
+            background-color: #373b3e;
+            border-bottom-color: #474d53;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+        }
+        .container {
+            max-width: 960px;
+        }
+        .logo {
+            width: 128px;
+            height: 128px;
+        }
+    </style>
 </head>
 <html>
-   <body>
+   <body data-bs-theme="light">
      <main>
         <div class="px-4 py-3 my-2 text-center">
-            <img class="d-block mx-auto mb-4" src="{{ url_for('static', filename='images/azure-icon.svg') }}" alt="Azure Logo" width="192" height="192"/>
-            <!-- <img  src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-            <h1 class="display-6 fw-bold text-primary">Welcome to Azure</h1>            
-          </div>
-        <form method="post" action="{{url_for('hello')}}">
-            <div class="col-md-6 mx-auto text-center">
-                <label for="name" class="form-label fw-bold fs-5">Could you please tell me your name?</label>
+            <button class="btn btn-outline-secondary theme-toggle" onclick="toggleTheme()">
+                <svg id="theme-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                </svg>
+            </button>
+            <img class="d-block mx-auto mb-4 logo" src="{{ url_for('static', filename='images/azure-icon.svg') }}" alt="Logo"/>
+            <h1 class="display-6 fw-bold text-primary">XInsights</h1>            
+        </div>
 
-                <!-- <p class="lead mb-2">Could you please tell me your name?</p> -->
-                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
-                    <input type="text" class="form-control" id="name" name="name" style="max-width: 256px;">
-                  </div>            
-                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
-                  <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">Say Hello</button>
-                </div>            
+        <div class="container">
+            <div class="row">
+                <!-- Query Input Section -->
+                <div class="col-md-8 mx-auto mb-4">
+                    <form method="post" action="{{url_for('hello')}}">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Enter Your Query</h5>
+                                <textarea class="form-control mb-3" id="name" name="name" rows="3" placeholder="Type or select a query..."></textarea>
+                                <button type="submit" class="btn btn-primary">Submit Query</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Pre-populated Prompts Section -->
+                <div class="col-md-10 mx-auto">
+                    <h4 class="text-center mb-3">Sample Queries</h4>
+                    <div class="row row-cols-1 row-cols-md-2 g-3">
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">Show me the top 10 purchase failure reasons in the last 2 weeks</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">List the most common customer complaints from high-value transactions</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">What are the trending products in our electronics category?</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">Display the average order processing time by region</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">Identify customers who abandoned their cart with items over $100</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">Show me conversion rates for different marketing campaigns</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">What's the distribution of customer ratings this month?</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">List products with unusual return patterns</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">Show me peak transaction hours in different time zones</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100">
+                                <div class="card-body py-2">
+                                    <p class="card-text small mb-2">Identify payment methods with highest decline rates</p>
+                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
-     </main>      
+        </div>
+     </main>
+
+     <script>
+        // Add click handlers for the copy buttons
+        document.querySelectorAll('.copy-prompt').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const queryText = this.previousElementSibling.textContent;
+                document.getElementById('name').value = queryText;
+                // Scroll to the textarea
+                document.getElementById('name').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-bs-theme', newTheme);
+            
+            // Save theme preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-bs-theme', savedTheme);
+     </script>
    </body>
 </html>
