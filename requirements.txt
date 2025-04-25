@@ -1,2 +1,4 @@
 Flask==3.1.0
 gunicorn
+azure-kusto-data>=0.0.15
+pandas>=1.0.0

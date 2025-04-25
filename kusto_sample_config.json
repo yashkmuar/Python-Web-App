@@ -1,0 +1,7 @@
+{
+  "kustoUri": "https://pfintdataswus2.westus2.kusto.windows.net",
+  "databaseName": "PlayFabInternal",
+  "tableName": "events.all",
+  "authenticationMode": "ManagedIdentity",
+  "waitForUser": true
+}
