@@ -17,7 +17,8 @@
             ],
             "python": {
                 "pythonPath": "python",
-                "envFile": "${workspaceFolder}/.env"
+                "venvPath": "",
+                "venvName": ""
             }
         }
     ]
