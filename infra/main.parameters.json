@@ -2,11 +2,23 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "environmentName": {
-        "value": "${AZURE_ENV_NAME}"
-      },
       "location": {
-        "value": "${AZURE_LOCATION}"
+        "value": "eastus"
+      },
+      "acrName": {
+        "value": "zeidpractice3acr"
+      },
+      "appServicePlanName": {
+        "value": "zeidpractice3-plan"
+      },
+      "webAppName": {
+        "value": "zeidpractice3-webapp"
+      },
+      "containerImageName": {
+        "value": "flask-app"
+      },
+      "containerImageVersion": {
+        "value": "latest"
       }
     }
 }
