@@ -9,6 +9,7 @@ param linuxSku           object = {
   size:     ''B1''
   tier:     ''Basic''
 }
+
 module acr ''./modules/container-registry/main.bicep'' = {
   name: ''acr''
   params: {
@@ -17,23 +18,24 @@ module acr ''./modules/container-registry/main.bicep'' = {
     adminUserEnabled: true
   }
 }
-module plan ''./modules/app-service/hostingPlan/main.bicep'' = {
-  name: ''plan''
-  params: {
-    name:     planName
-    location: location
-    sku:      linuxSku
-    kind:     ''Linux''
-    reserved: true
+
+resource plan ''Microsoft.Web/serverfarms@2022-09-01'' = {
+  name: planName
+  location: location
+  sku: linuxSku
+  kind: ''linux''
+  properties: {
+    reserved: true     // Linux plan
   }
 }
+
 module web ''./modules/web/site/main.bicep'' = {
   name: ''web''
   params: {
     name:                 webName
     location:             location
     kind:                 ''app''
-    serverFarmResourceId: plan.outputs.resourceId
+    serverFarmResourceId: plan.id
     siteConfig: {
       linuxFxVersion:  ''DOCKER|${acrName}.azurecr.io/placeholder:latest''
       appCommandLine:  ''''
